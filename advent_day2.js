@@ -1,4 +1,5 @@
 const fs = require('fs');
+//testing upload existing folder to git repo online
 
 fs.readFile('advent_day2_2.txt', (err, data) => {
     if (err) throw err;
