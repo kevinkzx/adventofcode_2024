@@ -55,5 +55,4 @@ fs.readFile("advent_day2_2.txt", (err, data) => {
   console.log("no test cases: ", temp.length);
   console.log("temp first: ", temp[0]);
   console.log("temp last: ", temp[temp.length - 1]);
-  // test
 });
