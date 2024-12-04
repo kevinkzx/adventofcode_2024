@@ -5,6 +5,8 @@ https://adventofcode.com/
 
 make sure text file is LF format
 
+sometimes in life. if it works it works
+
 ---
 
 ### Day 1 part 1
