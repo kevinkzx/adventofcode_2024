@@ -1,7 +1,7 @@
 # adventofcode
 
 can i get out of the naughty list?
-https://adventofcode.com/ \
+https://adventofcode.com/
 
 make sure text file is LF format
 
@@ -39,5 +39,15 @@ https://stackoverflow.com/questions/15090829/javascript-regex-pattern-match-mult
 ### Day 3 part 2
 
 set flag when encounter a do() or don't(). only carry out the mul() instruction if the flag is do().
+
+---
+
+### Day 4 part 1
+
+when we encounter a "X", we check the corresponding 'star' pattern. once it does not match, we set the corresponding direction to false. count and return number of true
+
+### Day 4 part 2
+
+when we encouter an "A", we get the 4 corners and make a temporary list. we check this list against all the other possible permutation. cout and return
 
 ---
