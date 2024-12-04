@@ -19,11 +19,11 @@ add the right list into a dictionary. key: value. key is the id and value is the
 
 ### Day 2 part 1
 
-check if the list is increasing or decreasing. for each step check the difference is at least 1 and at most 3
+check if the list is increasing or decreasing. for each step check the difference is at least 1 and at most 3.
 
 ### Day 2 part 2
 
-for cases that failed, generate all the permutations possible by removing each value once. check if list is valid
+for cases that failed, generate all the permutations possible by removing each value once. check if list is valid. remove item in array with splice() method. myArr.splice(index, 1)
 
 ---
 
