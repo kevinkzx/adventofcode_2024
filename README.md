@@ -36,7 +36,7 @@ https://www.w3schools.com/jsref/jsref_obj_regexp.asp \
 https://javascript.info/regexp-methods#:~:text=The%20method%20str.,regexp%20in%20the%20string%20str%20.&text=If%20the%20regexp%20has%20flag,capturing%20groups%20and%20other%20details. \
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions \
 https://stackoverflow.com/questions/3541750/regular-expression-to-allow-for-number-values-between-1-3-digits \
-https://stackoverflow.com/questions/15090829/javascript-regex-pattern-match-multiple-strings-and-or-against-single-strin \
+https://stackoverflow.com/questions/15090829/javascript-regex-pattern-match-multiple-strings-and-or-against-single-strin
 
 ### Day 3 part 2
 
