@@ -53,3 +53,19 @@ when we encounter a "X", we check the corresponding 'star' pattern. once it does
 when we encouter an "A", we get the 4 corners and make a temporary list. we check this list against all the other possible permutation. cout and return
 
 ---
+
+### Day 5 part 1
+
+for the rules of the pages, we add them to a dictionary with (key : value) pair of (pages : array of page rules). iterate thru each test case. Set L pointer on current page. Set R pointer on remaining pages, check that for each R, it exist in the value of the key L.
+
+### Day 5 part 2
+
+for test cases that are wrong, we iterate thru the testcase and 'build' our own order. for each incoming individual page, we check against the pages that are in our 'build' array and find the correct slot to place it in. \
+to find the correct spot, we iterate thru 'build' array. at I'th position, we check whether this page is included in the incoming individual page. if it is, we insert incoming individual page at the I'th position. if I'th reaches the end, we insert incoming individual page to the end of the 'build' array.
+
+\
+JS adding item to specific index in array \
+myArr.splice(index, 0, item); \
+https://stackoverflow.com/a/586189
+
+---
