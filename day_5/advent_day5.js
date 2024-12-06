@@ -78,7 +78,7 @@ for (let i = 0; i < testCases.length; i++) {
     incorrect.push(temptestcase);
   }
 }
-console.log("output: ", output);
+// console.log("output: ", output);
 
 ///////////////////// part two below /////////////////////
 
@@ -89,39 +89,66 @@ console.log("failed test cases: ", incorrect);
 /// for each incoming indvidual page, we check against the pages in
 /// 'build' array and find the correct slot to place it in
 /// the correct spot is the earliest index where there is 'dependencies'
+// let please = 0;
+// for (let i = 0; i < incorrect.length; i++) {
+//   let mylist = incorrect[i];
+//   let build = [];
+//   build.push(mylist[0]);
+//   for (let j = 1; j < mylist.length; j++) {
+//     let index = 0;
+//     let flag = false;
+//     for (let k = 0; k < build.length; k++) {
+//       if (k === build.length) {
+//         build.push(mylist[j]);
+//       } else {
+//         // check if build[k] is in the list
+//         // if its the list, add at index
+//         // if not, up the index
+//         if (mydict[mylist[j]] === undefined) {
+//           break;
+//         } else if (mydict[mylist[j]].includes(build[k])) {
+//           index = k;
+//           flag = true;
+//           break;
+//         }
+//       }
+//     }
+//     if (flag) {
+//       build.splice(index, 0, mylist[j]);
+//     } else {
+//       build.push(mylist[j]);
+//     }
+//     // console.log("build: ", build);
+//   }
+//   console.log("build: ", build);
+//   let middle = Math.floor(build.length / 2);
+//   please += parseInt(build[middle]);
+// }
+// console.log("please: ", please);
+
+/// alternate solution to part 2 ///
 let please = 0;
 for (let i = 0; i < incorrect.length; i++) {
-  let mylist = incorrect[i];
-  let build = [];
-  build.push(mylist[0]);
-  for (let j = 1; j < mylist.length; j++) {
-    let index = 0;
-    let flag = false;
-    for (let k = 0; k < build.length; k++) {
-      if (k === build.length) {
-        build.push(mylist[j]);
-      } else {
-        // check if build[k] is in the list
-        // if its the list, add at index
-        // if not, up the index
-        if (mydict[mylist[j]] === undefined) {
-          break;
-        } else if (mydict[mylist[j]].includes(build[k])) {
-          index = k;
-          flag = true;
-          break;
+  let curr = incorrect[i];
+  let temp = [];
+  for (let j = 0; j < curr.length; j++) {
+    // key is curr[j]
+    let count = 0;
+    for (let k = 0; k < curr.length; k++) {
+      if (k !== j) {
+        if (mydict[curr[j]] && mydict[curr[j]].includes(curr[k])) {
+          count++;
         }
       }
     }
-    if (flag) {
-      build.splice(index, 0, mylist[j]);
-    } else {
-      build.push(mylist[j]);
-    }
-    // console.log("build: ", build);
+    temp.push([curr[j], count]);
   }
-  console.log("build: ", build);
-  let middle = Math.floor(build.length / 2);
-  please += parseInt(build[middle]);
+  // console.log("temp: ", temp);
+  // sort temp by temp[i][1] in decreasing order
+  let sortedTemp = temp.sort((a, b) => {
+    return b[1] - a[1];
+  });
+  console.log("sortedTemp: ", sortedTemp);
+  please += parseInt(temp[Math.floor(temp.length / 2)][0]);
 }
 console.log("please: ", please);
