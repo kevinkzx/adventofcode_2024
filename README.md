@@ -69,3 +69,15 @@ myArr.splice(index, 0, item); \
 https://stackoverflow.com/a/586189
 
 ---
+
+### Day 6 part 1
+
+while within the bounds, we check the current position the guard is facing, (U, R, D, L). we first change the current position to X to mark if current position is not visited. we then find the next position that the guard will be and check if the next position is a blockage "#". if it is a blockage, we change the direction the guard is facing and place him on the next spot.
+
+### Day 6 part 2
+
+brute force all the possible location that we can put a singular blockage "#". for each new maze, we calculate if there is a blockage. we use a dictionary to check the position that we have visited. key: value. key is the postion and value is the direction that the guard is facing when at that position. we know that we are in a loop if at the current position, the guard is facing the same way as previous.
+
+NOTE: compared to part 1, we cannot pre move the guard when we are checking if the next position is a blockage. we can only change the direction that the guard is facing
+
+---

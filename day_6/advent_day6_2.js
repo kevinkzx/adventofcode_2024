@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-let input = fs.readFileSync("advent_day6_custom.txt");
+let input = fs.readFileSync("advent_day6.txt");
 input = input.toString().split("\n");
 
 // console.log("input: ", input);
@@ -24,7 +24,7 @@ for (let i = 0; i < maze.length; i++) {
 // maze.pop();
 let facing = "U";
 let gpcopy = [...guardPosition];
-
+let mcopy = structuredClone(maze);
 // guardPosition[0] is the row index
 // guardPosition[1] is the col index
 
@@ -112,109 +112,128 @@ console.log("count: ", count);
 
 //// part 2 ////
 /// brute force.
-/// we count number of steps in part 1.
-/// brute force to add positions. if number of steps more than part 1, this is a valid obstacle place
+/// we track at the current position, which direction we are facing.
+/// use a dictionary to check key:value key is the current position. value is the direction we are facing
+/// if we land on the same position and facing the same direcition, we are in a loop
 console.log("steps: ", steps);
-
+let gothow = 0;
 let please = 0;
 for (let i = 0; i < maze.length; i++) {
   for (let j = 0; j < maze[0].length; j++) {
     // console.log("gpcopy:", gpcopy);
-    let diu = [...gpcopy];
-    facing = "U";
-    let mazeCopy = structuredClone(maze);
-    let corner = [];
+    let mazeCopy = structuredClone(mcopy);
     if (i === gpcopy[0] && j === gpcopy[1]) {
       //   mazeCopy[i][j] = "#";
       console.log("not placing it here: ", i, j);
-      break;
+      continue;
+    } else if (maze[i][j] === "#") {
+      continue;
     } else {
       mazeCopy[i][j] = "#";
+      gothow++;
     }
-    // if (i === 6 && j === 3) {
-    //   console.log("maze NOW:");
-    // console.log(JSON.stringify(mazeCopy));
-    // }
-    // console.log(JSON.stringify(mazeCopy));
+
+    let gPosition = [...gpcopy];
+    facing = "U";
     let currentStep = 0;
-    let count = 0;
+    // current maze is mazeCopy
+
+    let tempCorner = [];
+
+    let tracker = {};
+    let found = false;
     while (
-      diu[0] >= 0 &&
-      diu[0] < maze.length &&
-      diu[1] >= 0 &&
-      diu[1] < maze[0].length &&
-      currentStep <= steps * 2
+      gPosition[0] >= 0 &&
+      gPosition[0] < maze.length &&
+      gPosition[1] >= 0 &&
+      gPosition[1] < maze[0].length &&
+      !found
     ) {
-      //   console.log("curentstep: ", currentStep);
+      // console.log("tracker: ", tracker);
       if (facing === "U") {
-        // change current to X
-        if (mazeCopy[diu[0]][diu[1]] !== "X") {
-          count++;
+        // we are going to go up
+        let imhere = [gPosition[0], gPosition[1]];
+        // console.log("gpostion: ", gPosition);
+        if (tracker[imhere] === undefined) {
+          tracker[imhere] = ["U"];
+        } else {
+          if (tracker[imhere].includes("U")) {
+            please++;
+            found = true;
+          }
         }
-        mazeCopy[diu[0]][diu[1]] = "X";
-        diu[0] -= 1;
         currentStep++;
-        if (diu[0] >= 0 && mazeCopy[diu[0]][diu[1]] === "#") {
+        gPosition[0] -= 1;
+        // check if it is still within bounds first before checking if next step is #
+        if (gPosition[0] >= 0 && mazeCopy[gPosition[0]][gPosition[1]] === "#") {
+          // next step up is a #. we are move right now
           facing = "R";
-          // go back where we came from and turn right
-          diu[0] += 1;
-          diu[1] += 1;
-          corner.push(diu);
+          tempCorner.push([gPosition[0] + 1, gPosition[1]]);
+          // we go the right
+          gPosition[0] += 1;
+          // gPosition[1] += 1;
         }
       } else if (facing === "R") {
-        if (mazeCopy[diu[0]][diu[1]] !== "X") {
-          count++;
+        let imhere = [gPosition[0], gPosition[1]];
+        if (tracker[imhere] === undefined) {
+          tracker[imhere] = ["R"];
+        } else {
+          if (tracker[imhere].includes("R")) {
+            please++;
+            found = true;
+          }
         }
-        mazeCopy[diu[0]][diu[1]] = "X";
-        diu[1] += 1;
         currentStep++;
-        if (diu[1] < maze[0].length && mazeCopy[diu[0]][diu[1]] === "#") {
+        gPosition[1] += 1;
+        if (
+          gPosition[1] < mazeCopy[0].length &&
+          mazeCopy[gPosition[0]][gPosition[1]] === "#"
+        ) {
           facing = "D";
-          diu[1] -= 1;
-          diu[0] += 1;
-          corner.push(diu);
+          tempCorner.push([gPosition[0], gPosition[1] - 1]);
+          gPosition[1] -= 1;
         }
       } else if (facing === "D") {
-        if (mazeCopy[diu[0]][diu[1]] !== "X") {
-          count++;
+        let imhere = [gPosition[0], gPosition[1]];
+        if (tracker[imhere] === undefined) {
+          tracker[imhere] = ["D"];
+        } else {
+          if (tracker[imhere].includes("D")) {
+            please++;
+            found = true;
+          }
         }
-        mazeCopy[diu[0]][diu[1]] = "X";
-        diu[0] += 1;
         currentStep++;
-        if (diu[0] < maze.length && mazeCopy[diu[0]][diu[1]] === "#") {
+        gPosition[0] += 1;
+        if (
+          gPosition[0] < mazeCopy.length &&
+          mazeCopy[gPosition[0]][gPosition[1]] === "#"
+        ) {
           facing = "L";
-          diu[0] -= 1;
-          diu[1] -= 1;
-          corner.push(diu);
+          tempCorner.push([gPosition[0] - 1, gPosition[1]]);
+          gPosition[0] -= 1;
         }
       } else if (facing === "L") {
-        // facing === "L"
-        if (mazeCopy[diu[0]][diu[1]] !== "X") {
-          count++;
+        let imhere = [gPosition[0], gPosition[1]];
+        if (tracker[imhere] === undefined) {
+          tracker[imhere] = ["L"];
+        } else {
+          if (tracker[imhere].includes("L")) {
+            please++;
+            found = true;
+          }
         }
-        mazeCopy[diu[0]][diu[1]] = "X";
-        diu[1] -= 1;
         currentStep++;
-        if (diu[1] >= 0 && mazeCopy[diu[0]][diu[1]] === "#") {
+        gPosition[1] -= 1;
+        if (gPosition[1] >= 0 && mazeCopy[gPosition[0]][gPosition[1]] === "#") {
           facing = "U";
-          diu[1] += 1;
-          diu[0] -= 1;
-          corner.push(diu);
+          tempCorner.push([gPosition[0], gPosition[1] + 1]);
+          gPosition[1] += 1;
         }
-      }
-      //   console.log(currentStep);
-      if (currentStep > steps) {
-        // console.log("currentstep: ", currentStep);
-        please++;
-        console.log(corner);
-        break;
       }
     }
-    // if (flag) {
-    //   please++;
-    //   //   console.log(JSON.stringify(mazeCopy));
-    //   console.log("AT HERE STONE: ", i, j);
-    // }
   }
 }
+console.log("gothow: ", gothow);
+
 console.log("PEALSE:DFASFDSAFDSFA: ", please);
