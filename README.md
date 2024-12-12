@@ -80,4 +80,54 @@ brute force all the possible location that we can put a singular blockage "#". f
 
 NOTE: compared to part 1, we cannot pre move the guard when we are checking if the next position is a blockage. we can only change the direction that the guard is facing
 
+JS making a copy of a 2D array
+let arrCopy = structureClone(arrOriginal);
+https://stackoverflow.com/a/76443507
+
+---
+
+### Day 7 part 1
+
+we iterate from the back of the list. if the goal is divisible by the previous number, we divide. else we will subtract. once we reach the start of the list, we check whether our final value is 1/0. If it is, we know that this list is valid and can be achieved with either + or \* operation.
+
+### Day 7 part 2
+
+BRUTE FORCE D:
+
+---
+
+### Day 8 part 1
+
+We add all the antennas of the same type into a dictionary. for each of the type of antenna, we check one antenna against the rest. calculate the distance between them and 'propogate' to find the position of the antinode and check that it is withint the boundary the city (input)
+
+### Day 8 part 2
+
+similar to part 1 just that the antinode does not only occur at 2x the distance away. it occurs at every x distance until it is out of the boundary.
+
+---
+
+### Day 9 part 1
+
+after representing the data in the correct format, left pointer starts from the start. right pointer starts from the end. move left pointer up until we find a free space, ".". move right pointer down until we find a data. do a swap of the item.
+in JS we can swap 2 items in an array by doing. [myarr[i], myarr[j]] = [myarr[j], myarr[i]].
+
+### Day 9 part 2
+
+we decrement our right pointer until we find a data. we calculate the size of the data. we then move up from the left and find a space that can fit the data. if the space is enough, we do the swap. if space not enough, we decrement our right pointer. repeat until right pointer is at the start.
+
+---
+
+### Day 10 part 1
+
+we have a dictionary that stores the 'edges' of our graph. we store the 'nodes' as indexes [i, j] from the 2D array. we store in a separate array our different start point and end point. for each start point, we check against all the other end point and do a BFS to see if there exist a path from start to end.
+
+https://www.geeksforgeeks.org/find-if-there-is-a-path-between-two-vertices-in-a-given-graph/
+https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
+https://prepfortech.io/leetcode-solutions/all-paths-from-source-to-target
+
+### Day 10 part 2
+
+for each of the valid start nodes 'trailheads' and their corresponding end nodes. we check how many paths there are to get from source to the target using DFS.
+https://leetcode.com/problems/all-paths-from-source-to-target/solutions/2786004/clean-code/
+
 ---
