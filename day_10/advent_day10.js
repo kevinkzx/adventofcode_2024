@@ -101,12 +101,21 @@ for (let i = 0; i < mymap.length; i++) {
   }
 }
 
+let validStartEnd = {};
 let output = 0;
 for (let i = 0; i < start.length; i++) {
   for (let j = 0; j < target.length; j++) {
     let result = bfs(graph, start[i], target[j]);
     // console.log("result: ", result);
     if (result) {
+      // console.log("there exist a path for the following");
+      // console.log("start: ", start[i]);
+      // console.log("target: ", target[j]);
+      if (validStartEnd[JSON.stringify(start[i])] === undefined) {
+        validStartEnd[JSON.stringify(start[i])] = [target[j]];
+      } else {
+        validStartEnd[JSON.stringify(start[i])].push(target[j]);
+      }
       output++;
     }
   }
@@ -116,3 +125,36 @@ for (let i = 0; i < start.length; i++) {
 // console.log("target: ", target);
 // console.log("graph: ", graph);
 console.log("output: ", output);
+
+/////////////////// PART 2 ///////////////////
+// we want to find all the different unique paths from start to end point
+// for each of the valid start & end point we found in part 1,
+// we want to check for each start point, how many paths it can take to reach an end point
+// console.log("part 2: ", graph);
+// console.log("validStartEnd: ", validStartEnd);
+
+let result = [];
+const validPaths = (start, end, graph, path) => {
+  if (start === JSON.stringify(end)) {
+    result.push(path);
+  }
+  // console.log("this is key: ", start);
+  // console.log("this is value: ", graph[start]);
+  for (let i = 0; i < graph[start].length; i++) {
+    validPaths(
+      JSON.stringify(graph[start][i]),
+      end,
+      graph,
+      path.concat([start])
+    );
+  }
+};
+for (const [key, value] of Object.entries(validStartEnd)) {
+  for (let i = 0; i < value.length; i++) {
+    // console.log("key: ", key);
+    // console.log("value: ", value);
+    validPaths(key, value[i], graph, [key]);
+  }
+}
+// console.log("result: ", result);
+console.log("result length: ", result.length);
