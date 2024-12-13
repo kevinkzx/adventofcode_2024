@@ -131,3 +131,18 @@ for each of the valid start nodes 'trailheads' and their corresponding end nodes
 https://leetcode.com/problems/all-paths-from-source-to-target/solutions/2786004/clean-code/
 
 ---
+
+### Day 11 part 1
+
+naive brute force solution just checking the conditions and generating new stone. for each blink, new stones generated are added to a temp array. this temp array will then be assigned to the original array. we iterate thru the original array k=25 times.
+\
+sidenote: some precompute array attempt for numbers 0,1
+
+### Day 11 part 2
+
+brute force solution will not work. instead of using array as our datastructure to store the number of stones, we use a dictionary to store the number on the stone and how many of each stones there are. key : value. key is the 'number' on the stone. value is amount/quantity of this stone. we go thru the conditions and add to our new dict. at the end of each 'blink' we assign our dict with this tempdict. do this for k=75 times.
+\
+JS delete first character of string n times if it is equal to "0" \
+https://stackoverflow.com/a/4564478
+
+---
