@@ -151,7 +151,8 @@ for (let i = 0; i < garden.length; i++) {
       // console.log("fences: ", fenceDict);
 
       // just taking horizontal into account, we can sort by first index, then second index.
-      // after sorting, we need to find the fences that are 'in-line' we can do this by checking the second index to make sure they are in increment order
+      // after sorting, we need to find the fences that are 'in-line' we can do this by checking the second index to make sure they are in increment order.
+      // to check that they are in line, we need to make sure that they are on the same 'level' and also for each fence, the next second index is 1 higher than the pervious
 
       let horizontal = fenceDict["horizontal"];
       let sortedHorizontal = horizontal.sort((a, b) => {
