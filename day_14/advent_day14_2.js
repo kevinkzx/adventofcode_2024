@@ -1,6 +1,9 @@
 const fs = require("fs");
 let input = fs.readFileSync("advent_day14.txt").toString().split("\n");
 
+// just whack some centre block and make sure the robots are in a line?
+// then the picture should be there?
+
 let gridHeight = 103;
 let gridWidth = 101;
 let grid = [];
@@ -11,9 +14,10 @@ for (let i = 0; i < gridHeight; i++) {
   }
 }
 
-let seconds = 100;
+let seconds = 10000;
 for (let k = 0; k < seconds; k++) {
   // we make a new grid and display it
+  // console.log("k:", k);
   gridCopy = structuredClone(grid);
   for (let i = 0; i < input.length; i++) {
     let temp = input[i].split(" ");
@@ -57,11 +61,21 @@ for (let k = 0; k < seconds; k++) {
 
     gridCopy[startI][startJ] = 1;
   }
-  //   console.log("at k second: ", k);
-  //   console.log(gridCopy);
-  //   fs.writeFile("example.txt", JSON.stringify(gridCopy) + "\n", (err) => {
-  //     if (err) {
-  //       console.log("some err: ", err);
-  //     }
-  //   });
+
+  //check if there is some robots that are in a line in the middle of the picture?
+  let middleHeight = Math.floor(gridHeight / 2);
+  // our width is 101. maybe find 1- in a row?
+  // so we need to slice index 45-54
+  let tempcheck = gridCopy[middleHeight].slice(45, 55);
+  let checker = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  if (JSON.stringify(tempcheck) === JSON.stringify(checker)) {
+    console.log("found something here at K: ", k);
+    // console.log(gridCopy);
+    const arrayAsString = gridCopy.map((row) => row.join(" ")).join("\n");
+    fs.writeFile("example.txt", arrayAsString, (err) => {
+      if (err) {
+        console.log("error: ", err);
+      }
+    });
+  }
 }
