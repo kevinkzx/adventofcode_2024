@@ -146,3 +146,70 @@ JS delete first character of string n times if it is equal to "0" \
 https://stackoverflow.com/a/4564478
 
 ---
+
+### Day 12 part 1
+
+we iterate thru each spot on the garden and a BFS. for BFS logic, we BFS the flower that is on the current spot. we check the spot we are going to next is of the same type.
+if it is of the same type, we add to our queue and increase the flower count. important to add our current spot to visited set so that we do not come back to this spot. if i am not wrong, this approach is considered floodfilling.
+\
+for fence logic, we check for the current spot, the UP DOWN LEFT RIGHT if it is touching any of the flower of its on type and whether it is at the edge of the garden
+
+### Day 12 part 2
+
+aside from adding fence count from part 1, we indicate which side of the flower of the fence we are adding to. this way we can track whether the fence is inner or outer fence.
+\
+my approach. summarised by redditors. Take all our fences found in part 1, put them in separate horizontal and vertical fence arrays, then sort based on row/col (for horizontal, sort by row first, then column). This means all contiguos blocks of fence will be next to each other in each array. we can then 'walk' through the sorted array and any time we jump a row/col or if the gap between the same row/col is bigger than one, we found a new side.
+\
+second approach is we can count the number or corners we have. the number of corners would be equal to how many sides of fences we have
+
+---
+
+### Day 13 part 1
+
+since each button can only be pressed 100 times each, we just do a double for loop and see whether we can get to the target. a naive approach
+
+### Day 13 part 2
+
+the 'lowest' cost to reach target is somewhat of a red herring as there could only be one answer if it is possible to catch the prize. we can use math to find out whether it is possible to get the price.
+// MATHTEMATICAL PROOF
+/\*
+for button A. we can say that each press of button A, moves a_x in the horizontal direction and a_y in the vertical direction
+for button B. we can say that each press of button B, moves b_x in the horizontal direction and b_y in the vertical direction
+let our target location be p_x and p_y.
+so for any given value, we want the following equation to be true.
+let A be the number of times we press button A. and B be the number of times we press button B.
+(1) Aa_x + Bb_x = p_x
+(2) Aa_y + Bb_y = p_y
+
+    by using simple math, we can solve for A and B.
+    e.g solving for A.
+    from equation (2)
+    Bb_y = p_y - Aa_y
+    B = (p_y - Aa_y) / b_y
+    sub b into equation (1)
+    Aa_x + ( (b_x*p_y - Ab_x*a_y) / b_y ) = p_x
+    Aa_x*b_y + b_x*p_y - Ab_x*a_y = p_x*b_y
+    Aa_x*b_y - Ab_x*a_y = p_x*b_y - p_y*b_x
+    A(a_x*b_y - b_x*a_y) = p_x*b_y - p_y*b_x
+    A = ( p_x*b_y - p_y*b_x ) / ( a_x*b_y - b_x*a_y )
+
+    Taking one of the example where
+    A x+94 y+34
+    B x+22 y+67
+    Target x=8400 y=5400
+    a_x = 94
+    a_y = 34
+    b_x = 22
+    b_y = 67
+    p_x = 8400
+    p_y = 5400
+
+    subbing in the values, we can see that A = 80
+
+    If it is not possible for the claw machine to get the toy, A and B will not return whole numbers
+    A = ( p_x*b_y - p_y*b_x ) / ( a_x*b_y - b_x*a_y )
+    B = ( p_x*a_y - p_y*a_x ) / ( b_x*a_y - b_y*a_x )
+
+\*/
+
+---
