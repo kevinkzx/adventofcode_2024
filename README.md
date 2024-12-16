@@ -154,6 +154,8 @@ if it is of the same type, we add to our queue and increase the flower count. im
 \
 for fence logic, we check for the current spot, the UP DOWN LEFT RIGHT if it is touching any of the flower of its on type and whether it is at the edge of the garden
 
+https://hackernoon.com/a-beginners-guide-to-bfs-and-dfs-in-javascript
+
 ### Day 12 part 2
 
 aside from adding fence count from part 1, we indicate which side of the flower of the fence we are adding to. this way we can track whether the fence is inner or outer fence.
