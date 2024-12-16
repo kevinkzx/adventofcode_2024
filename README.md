@@ -170,9 +170,9 @@ since each button can only be pressed 100 times each, we just do a double for lo
 
 ### Day 13 part 2
 
-the 'lowest' cost to reach target is somewhat of a red herring as there could only be one answer if it is possible to catch the prize. we can use math to find out whether it is possible to get the price.
+the 'lowest' cost to reach target is somewhat of a red herring as there could only be one answer if it is possible to catch the prize. we can use math to find out whether it is possible to get the price. \*
 // MATHTEMATICAL PROOF
-/\*
+/
 for button A. we can say that each press of button A, moves a_x in the horizontal direction and a_y in the vertical direction
 for button B. we can say that each press of button B, moves b_x in the horizontal direction and b_y in the vertical direction
 let our target location be p_x and p_y.
