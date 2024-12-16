@@ -1,7 +1,7 @@
 // each button cannot be pressed more than 100 times.
 
 const fs = require("fs");
-let input = fs.readFileSync("advent_day13_custom.txt").toString().split("\n");
+let input = fs.readFileSync("advent_day13.txt").toString().split("\n");
 input.push("");
 // console.log("input");
 // console.log(input);
@@ -18,7 +18,7 @@ for (let i = 0; i < input.length; i++) {
 }
 // console.log("inputArr");
 // console.log(inputArr);
-
+let output = 0;
 for (let i = 0; i < inputArr.length; i++) {
   // button a inputArr[i][0]
   // button b inputArr[i][1]
@@ -51,63 +51,78 @@ for (let i = 0; i < inputArr.length; i++) {
   );
   //   console.log("target x, y: ", xtarget, ytarget);
 
-  let maxX = Math.max(xaxisA, xaxisB);
-  let maxY = Math.max(yaxisA, yaxisB);
+  let maxX = xaxisA * 100 + xaxisB * 100;
+  let maxY = yaxisA * 100 + yaxisB * 100;
   if (maxX * 100 < xtarget || maxY * 100 < ytarget) {
-    console.log("for this input: ", inputArr[i]);
-    console.log("this set is impossible");
-    console.log("###########################################################");
+    // console.log("for this input: ", inputArr[i]);
+    // console.log("this set is impossible");
     continue;
   }
-  console.log("this set can still try");
+  // console.log("for this input: ", inputArr[i]);
 
-  console.log("for this input: ", inputArr[i]);
+  // console.log("xaxisA: ", xaxisA);
+  // console.log("yaxisA: ", yaxisA);
 
-  console.log("xaxisA: ", xaxisA);
-  console.log("yaxisA: ", yaxisA);
+  // console.log("xaxisB: ", xaxisB);
+  // console.log("yaxisB: ", yaxisB);
 
-  console.log("xaxisB: ", xaxisB);
-  console.log("yaxisB: ", yaxisB);
+  // console.log("--- target ---");
+  // console.log("target x, y: ", xtarget, ytarget);
 
-  console.log("--- target ---");
-  console.log("target x, y: ", xtarget, ytarget);
-
-  let initialX = xaxisB * 100;
-  let initialY = yaxisB * 100;
-  let removed = 0;
-  console.log("starting wit this: ", initialX, initialY);
-  while (removed < 100) {
-    if (initialX === xtarget && initialY === ytarget) {
-      break;
-    } else {
-      // we remove and add if it is not enough
-      removed++;
-      initialX -= xaxisB;
-      initialY -= yaxisB;
-      //   console.log("removed and initialxy: ", removed, initialX, initialY);
-      // add if either is not enough
-      //   if (initialX < xtarget || initialY < ytarget) {
-      //     for (let i = 0; i < removed; i++) {
-      //       for (let j = 1; j <= removed - i; j++) {
-      //         let tempx = initialX + j * xaxisA + i * xaxisB;
-      //         let tempy = initialY + j * yaxisA + i * yaxisB;
-      //         if (removed === 61 && j === removed - i) {
-      //           console.log("tempxy at 60: ", tempx, tempy);
-      //           console.log("adding a times: ", j);
-      //           console.log("adding b times: ", i);
-      //         }
-      //         if (tempx === xtarget && tempy === ytarget) {
-      //           console.log("found something here");
-      //           break;
-      //         }
-      //       }
-      //     }
-      //   }
+  // we can set min to this number because total cost to press both buttons 100 times each would be
+  // 100*1 + 100*3. we know that it would not exceed this amount
+  let min = 600;
+  for (let i = 0; i < 100; i++) {
+    for (let j = 0; j < 100; j++) {
+      let sumX = i * xaxisA + j * xaxisB;
+      let sumY = i * yaxisA + j * yaxisB;
+      if (sumX === xtarget && sumY === ytarget) {
+        let cost = i * 3 + j * 1;
+        min = Math.min(min, cost);
+      }
     }
   }
 
+  // console.log("cost: ", min);
+  if (min !== 600) {
+    output += min;
+  }
+  // let initialX = xaxisB * 100;
+  // let initialY = yaxisB * 100;
+  // let removed = 0;
+  // console.log("starting wit this: ", initialX, initialY);
+  // while (removed < 100) {
+  //   if (initialX === xtarget && initialY === ytarget) {
+  //     break;
+  //   } else {
+  //     // we remove and add if it is not enough
+  //     removed++;
+  //     initialX -= xaxisB;
+  //     initialY -= yaxisB;
+  //     //   console.log("removed and initialxy: ", removed, initialX, initialY);
+  //     // add if either is not enough
+  //     //   if (initialX < xtarget || initialY < ytarget) {
+  //     //     for (let i = 0; i < removed; i++) {
+  //     //       for (let j = 1; j <= removed - i; j++) {
+  //     //         let tempx = initialX + j * xaxisA + i * xaxisB;
+  //     //         let tempy = initialY + j * yaxisA + i * yaxisB;
+  //     //         if (removed === 61 && j === removed - i) {
+  //     //           console.log("tempxy at 60: ", tempx, tempy);
+  //     //           console.log("adding a times: ", j);
+  //     //           console.log("adding b times: ", i);
+  //     //         }
+  //     //         if (tempx === xtarget && tempy === ytarget) {
+  //     //           console.log("found something here");
+  //     //           break;
+  //     //         }
+  //     //       }
+  //     //     }
+  //     //   }
+  //   }
+  // }
+
   /// ITS NOT TOTAL WE CAN PUSH 100 TIMES FOR BOTH BUTTON.
   /// ITS EACH, FOR INDIVIDUAL, BUTTON WE CAN PUSH 100 TIMES MAX
-
-  console.log("###########################################################");
 }
+
+console.log("output: ", output);
