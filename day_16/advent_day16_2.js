@@ -1,5 +1,5 @@
 const fs = require("fs");
-let input = fs.readFileSync("advent_day16_custom.txt").toString().split("\n");
+let input = fs.readFileSync("advent_day16.txt").toString().split("\n");
 
 // console.log("input");
 // console.log(input);
@@ -120,72 +120,113 @@ while (queue.length) {
   }
 }
 
-// console.log("graph: ", graph);
+//////// MANY MANY ASSUMPTIONS GOING ON ////////
+// assume that every path goes into the final spot the same direction. this just happens to work for my input
+// hate to admit but upgraded dijkstra is from chatgpt.
+// the difference between upgraded and normal is that, for each node, it is adding the shortest predecessor
+// we then have a backtrack function that goes back from target to start and 'form' the path
+// at the end we need to add 1 cos it didnt push the S node into it
 
-const dijkstra = (graph, start) => {
-  // graph would be an object
-  // start would be an array [i, j] of the starting position
-  //   console.log("start: ", start);
-  // create an object to store the shortest distance from start node to every other node
-  let distances = {};
-  // set to keep track of all the visited nodes
-  let visited = new Set();
+const dijkstraUpgraded = (graph, start, target) => {
+  const distances = {};
+  const predecessors = {};
+  const visited = new Set();
+  const priorityQueue = [];
 
-  // get all the nodes of the graph
-  let nodes = Object.keys(graph);
-  //   console.log("nodes: ", nodes);
-
-  // intially, set distance to all nodes to infinity
-  for (let node of nodes) {
+  // initialise distances and predecessors
+  for (const node in graph) {
     distances[node] = Infinity;
+    predecessors[node] = [];
   }
-  // set distance to start node as 0
-  distances[JSON.stringify(start)] = 0;
+  distances[start] = 0;
+  priorityQueue.push({ node: start, cost: 0 });
 
-  // loop until all nodes are visited
-  while (nodes.length) {
-    // console.log("new while iteration");
-    // sort the remaining nodes by distance and get the shortest distance to the next unvisited node
-    nodes.sort((a, b) => {
-      return distances[a] - distances[b];
+  while (priorityQueue.length > 0) {
+    // sort the prio queue by cost and remove the smallest
+
+    // console.log("visited: ", visited);
+    priorityQueue.sort((a, b) => {
+      return a.cost - b.cost;
     });
-    let closestNode = nodes.shift();
-    // console.log("closestNode from current: ", closestNode);
+    const { node: currentNode, cost: currentCost } = priorityQueue.shift();
 
-    // if the shortest distance to the closest node is still infinity, then remaining nodes are unreachable
-    if (distances[closestNode] === Infinity) break;
+    if (visited.has(JSON.stringify(currentNode))) {
+      continue; // skip this node if it has been visited
+    }
+    visited.add(JSON.stringify(currentNode));
+    // console.log("prio q after adding: ", priorityQueue);
+    for (const [neighbor, weight] of Object.entries(graph[currentNode])) {
+      // console.log("object entries: neightbor: ", neighbor);
+      // console.log("object entries: weight: ", weight);
+      if (visited.has(JSON.stringify(neighbor))) {
+        continue; // skip visited neighbors
+      }
+      const newCost = currentCost + weight;
 
-    // mark the chosen node as visited
-    visited.add(JSON.stringify(closestNode));
-
-    // for each of the neighboring node of the current node
-    for (let neighbor in graph[closestNode]) {
-      // if the neighbor has not been visited yet
-      if (!visited.has(neighbor)) {
-        // calculate the tentative distance to the neighboring node
-        let newDistance = distances[closestNode] + graph[closestNode][neighbor];
-
-        // if the newly calculated distance is shorter, we replace it in our distances array
-        if (newDistance < distances[neighbor]) {
-          distances[neighbor] = newDistance;
-        }
+      // if a new minium cost is found
+      if (newCost < distances[neighbor]) {
+        distances[neighbor] = newCost;
+        predecessors[neighbor] = [currentNode];
+        priorityQueue.push({ node: neighbor, cost: newCost });
+      } else if (newCost === distances[neighbor]) {
+        predecessors[neighbor].push(currentNode);
       }
     }
   }
-  return distances;
+  return { distances, predecessors };
 };
-let distanceReturn = dijkstra(graph, start);
-// console.log("distanceReturn: ", distanceReturn);
+
+const { distances, predecessors } = dijkstraUpgraded(
+  graph,
+  JSON.stringify(start)
+  // JSON.stringify([[1, maze[0].length - 2, "N"]])
+);
+
+// console.log("minimum distances: ", distances);
+// console.log("predecessors: ", predecessors);
 let goalPoint = [];
 let targetArr = [];
 targetArr.push(JSON.stringify([1, maze[0].length - 2, "N"]));
 targetArr.push(JSON.stringify([1, maze[0].length - 2, "S"]));
 targetArr.push(JSON.stringify([1, maze[0].length - 2, "E"]));
 targetArr.push(JSON.stringify([1, maze[0].length - 2, "W"]));
-for (const [key, value] of Object.entries(distanceReturn)) {
+for (const [key, value] of Object.entries(distances)) {
   if (targetArr.includes(key)) {
     goalPoint.push([value]);
   }
 }
 console.log("goalPoint: ", goalPoint);
 console.log("min: ", Math.min(...goalPoint));
+let minDistance = Math.min(...goalPoint);
+
+function findAllPaths(predecessors, start, target) {
+  const paths = [];
+  // console.log("backtrack: ", target);
+  function backtrack(path, node) {
+    if (node === start) {
+      paths.push([start, ...path.reverse()]);
+      return;
+    }
+    for (const pred of predecessors[node]) {
+      backtrack([pred, ...path], pred);
+    }
+  }
+
+  backtrack([], target);
+  return paths;
+}
+const allPaths = findAllPaths(
+  predecessors,
+  JSON.stringify(start),
+  JSON.stringify([1, maze[0].length - 2, "E"])
+);
+
+console.log("all paths with min cost: ", allPaths);
+let countSet = new Set();
+for (let i = 0; i < allPaths.length; i++) {
+  for (let j = 0; j < allPaths[i].length; j++) {
+    countSet.add(allPaths[i][j].split('"')[0]);
+  }
+}
+console.log(countSet.size);
+console.log(countSet);
