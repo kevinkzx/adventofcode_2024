@@ -24,12 +24,12 @@ for (let i = 0; i < input.length; i++) {
 
 ///////////////////////////////////////////////////////////////////////////
 // consolidated instructions
-// let tempinstruction = "";
-// for (let i = 0; i < instructions.length; i++) {
-//   tempinstruction += instructions[i];
-// }
-// // console.log("tempinstruction: ", tempinstruction);
-// instructions = [tempinstruction];
+let tempinstruction = "";
+for (let i = 0; i < instructions.length; i++) {
+  tempinstruction += instructions[i];
+}
+// console.log("tempinstruction: ", tempinstruction);
+instructions = [tempinstruction];
 ///////////////////////////////////////////////////////////////////////////
 
 let map = [];
