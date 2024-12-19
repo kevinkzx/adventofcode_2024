@@ -246,7 +246,7 @@ we use BFS to form our graph. our graph has key of the current positiion and whe
 
 https://reginafurness.medium.com/dijkstras-algorithm-in-javascript-4b5db48a93d4 \
 https://medium.com/@adriennetjohnson/a-walkthrough-of-dijkstras-algorithm-in-javascript-e94b74192026 \
-https://patrickkarsh.medium.com/dijkstras-shortest-path-algorithm-in-javascript-1621556a3a15 \
+https://patrickkarsh.medium.com/dijkstras-shortest-path-algorithm-in-javascript-1621556a3a15 
 
 ### Day 16 part 2
 
