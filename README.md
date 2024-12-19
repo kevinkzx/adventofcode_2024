@@ -219,3 +219,51 @@ let A be the number of times we press button A. and B be the number of times we 
 ---
 
 ### Day 14 part 1
+
+to find out where the robots will be after k seconds, we can just multiply their velocity by number of seconds and take the modulo of the size of the grid. this way we know how much extra to move.
+
+### Day 14 part 2
+
+spoilers from reddit, implemented a search for a block of consecutive robots to check for picture.
+
+another idea would be checking that if none of the robots are overlapping each other, we can assume that they are forming up for a picture
+
+---
+
+### Day 15 part 1
+
+we check where the robot is going to move to. if we are moving to an empty space, update robot position and our grid. if the robot is moving into a wall, we dont change anything and go to the next step. if the robot is moving into a box, we iterate along the direction the robot is facing until we find a empty space or wall. if its an empty space, we iterate and backwards and move the box. if it is a wall, we dont do anything
+
+### Day 15 part 2
+
+similar logic to part 1. for moving boxes left and right, we can use the same logic as part 1. for moving boxes up and down, we need to do a BFS to find all the boxes that the current box is touching. once we have found all the 'front' of the boxes, we check that for every spot it is empty. only if every spot is empty, we can then push the whole 'stack' of boxes. to push the whole stack of boxes, we track all the boxes that will be affected. we then set their previous location to empty space and update the 'forward' postion with the boxes
+
+---
+
+### Day 16 part 1
+
+we use BFS to form our graph. our graph has key of the current positiion and where it is facing. the value are the positions that it can reach from the current spot, which includes turning. we then use dijkstra to find the shortest distance from start to every single node on the graph.
+
+https://reginafurness.medium.com/dijkstras-algorithm-in-javascript-4b5db48a93d4 \
+https://medium.com/@adriennetjohnson/a-walkthrough-of-dijkstras-algorithm-in-javascript-e94b74192026 \
+https://patrickkarsh.medium.com/dijkstras-shortest-path-algorithm-in-javascript-1621556a3a15 \
+
+### Day 16 part 2
+
+we have to modify our dijkstra. used chatgpt for help here. the main idea in this modified dijkstra, while we are updating the shortest path to reach the current node from start, we add to it predecessor where we came from. we can then use another path forming helper function to iterate backwards and get the path
+
+---
+
+### Day 17 part 1
+
+follow the example and implement the different instruction
+
+### Day 17 part 2
+
+after looking through the instrucitons given in our puzzle input, we can see that in order to have our program print out the number of outputs, we need to execute a minimum amount of jump instructions. we can then get the lower bound of our search space. we also notice that the output only changes when we change certain values in the A register. we can then increase our current A by a larger value if we have yet to match our output. we can check how many we match but comparing from the back. if the last value of our output is not the same as the desired one, we can increase our A by a larger value. as more of the output is matched, we start incrementing our A by a small amount.
+
+JS note for doing bit operations on numbers more than 32bit we can do the following \
+`let bitwise result = Number(BigInt(A) ^ BigInt(B));`
+thanks reddit for this tip
+
+---
