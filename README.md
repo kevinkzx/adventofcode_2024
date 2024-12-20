@@ -246,7 +246,7 @@ we use BFS to form our graph. our graph has key of the current positiion and whe
 
 https://reginafurness.medium.com/dijkstras-algorithm-in-javascript-4b5db48a93d4 \
 https://medium.com/@adriennetjohnson/a-walkthrough-of-dijkstras-algorithm-in-javascript-e94b74192026 \
-https://patrickkarsh.medium.com/dijkstras-shortest-path-algorithm-in-javascript-1621556a3a15 
+https://patrickkarsh.medium.com/dijkstras-shortest-path-algorithm-in-javascript-1621556a3a15
 
 ### Day 16 part 2
 
@@ -265,5 +265,17 @@ after looking through the instrucitons given in our puzzle input, we can see tha
 JS note for doing bit operations on numbers more than 32bit we can do the following \
 `let bitwise result = Number(BigInt(A) ^ BigInt(B));`
 thanks reddit for this tip
+
+---
+
+### Day 18 part 1
+
+add blockers on the graph based on incoming instructions. use dijkstra to get the distance from start to each node. get the distance for our last node by iterating the return from our dijkstra algorithm.
+
+### Day 18 part 2
+
+iterate and increase number of blockers in our graph by 1 each time. for each iteration we check if dijkstra returns distance to our target. if our target is not in the distances object returned by dijkstra, we know that there is no path from start to end. return the instruction.
+
+a smarter way to do it is probably. after getting the shortest path, for each blocker we add, check that if it falls on our shortest path. if it does not, we can process to the next blocker. if it is, we calculate the shortest path again and check if we can reach the end point from our starting point.
 
 ---
