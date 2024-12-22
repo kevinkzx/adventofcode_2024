@@ -285,7 +285,8 @@ a smarter way to do it is probably. after getting the shortest path, for each bl
 this is a DP problem, in our recursive function, we use memoization to help us store previuosly computed results so that we do not have to recalculate and find whether our 'smaller problem' is valid.
 
 https://www.youtube.com/watch?v=H9bfqozjoqs \
-https://www.youtube.com/watch?v=H9bfqozjoqs
+https://www.youtube.com/watch?v=H9bfqozjoqs \
+https://medium.com/@rizwanakram07/introduction-to-dynamic-programming-6d789be518da
 
 ### Day 19 part 2
 
