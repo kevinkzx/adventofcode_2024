@@ -279,3 +279,16 @@ iterate and increase number of blockers in our graph by 1 each time. for each it
 a smarter way to do it is probably. after getting the shortest path, for each blocker we add, check that if it falls on our shortest path. if it does not, we can process to the next blocker. if it is, we calculate the shortest path again and check if we can reach the end point from our starting point.
 
 ---
+
+### Day 19 part 1
+
+this is a DP problem, in our recursive function, we use memoization to help us store previuosly computed results so that we do not have to recalculate and find whether our 'smaller problem' is valid.
+
+https://www.youtube.com/watch?v=H9bfqozjoqs \
+https://www.youtube.com/watch?v=H9bfqozjoqs
+
+### Day 19 part 2
+
+we use the same idea to store the number of counts we have. for detailed explanation, look at day 19 folder markdown file
+
+---
