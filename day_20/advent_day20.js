@@ -1,5 +1,5 @@
 const fs = require("fs");
-let input = fs.readFileSync("advent_day20.txt").toString().split("\n");
+let input = fs.readFileSync("advent_day20_custom.txt").toString().split("\n");
 // console.log(input);
 let maze = [];
 for (let i = 0; i < input.length; i++) {
