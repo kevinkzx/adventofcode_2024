@@ -293,3 +293,34 @@ https://medium.com/@rizwanakram07/introduction-to-dynamic-programming-6d789be518
 we use the same idea to store the number of counts we have. for detailed explanation, look at day 19 folder markdown file
 
 ---
+
+### Day 20 part 1
+
+Since this is a racetrack, we know that there is only one path and there is no loops or forks (specific to this puzzle). The solution we use is very specfic to solving input file designed for AOC. number the tiles accordingly from start to the end point. Iterate thru each "#" blocker on the maze. This is a valid place for us to 'noclip' thru if and only if it is touching at least 2 parts of the racetrack ".". For each of the possible spots of "#" we then check where we enter and come out from. We can know how many picoseconds saved if we take the difference at the tile number we enter and the tile number that we exit minus number of picoseconds it takes to use the shortcut. E.g we enter at tile 10. and we exit at til 59. we save about 59-10-2, picoseconds.
+
+### Day 20 part 2
+
+since the path of the shortcut we take does not matter and we are only interested about where we start and stop cheating, we can use a naive solution to find all the shortcuts. we do this by doing a double for loop for our racetracks. for the current racetrack i, we check against all the other racetrack j and see if they are within our distance of 20. if it is, we know that this can be a valid start and end point cheat.
+
+---
+
+### Day 21 part 1
+
+we just have a mapping of the directions that we need to take when going from one button to another. the pathing should prioritise going the same direction first before changing direction (i.e it should not zigzag). However, depends on the path taken for the robot that is touching the number pad, the same amount of moves could lead to different amount of moves for the downstream robots that are touching the arrow pad. To solve this, use a for loop and randomly pick different paths and check if the downstream robot now has the minimum amount of moves
+
+### Day 21 part 2
+
+we cannot assume that the moves on the number pad from part 1 is the shortest as we add more robots, the difference would become larger. CHEAT: managed to find someone's else pathing and use it to get the most optimal path for both number pad and arrow pad.
+
+Once we have the best path for the number pad, we can use recursion and memoization to calculate the moves require for the 25 robots. the paramerters for our recursive function takes in command ("<^>>vA") and the current depth that it is in.
+base case of recursive function is when depth === 0. means we are at the robot that is furthest away from the number pad. we then check if the current count has been calculated in our memoization.
+if the current depth is not at the end, we iterate thru the incoming command and call the respective command and decrease in depth.
+
+MEGA CREDITS TO: https://github.com/onlyroz/AdventOfCode2024/blob/main/day21/src/partTwo/index.ts
+
+---
+
+### Day 22 part 1
+
+simple for loop to generate the banans for the next 2000 iterations.
+JS doing bits operation on numbers bigger than 32 bit length. Number(BigInt(a) || BigInt(b))
