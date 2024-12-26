@@ -1,5 +1,5 @@
 const fs = require("fs");
-let input = fs.readFileSync("advent_day22_custom.txt").toString().split("\n");
+let input = fs.readFileSync("advent_day22.txt").toString().split("\n");
 console.log(input);
 
 let mydict = {};
@@ -33,59 +33,32 @@ for (const [key, value] of Object.entries(mydict)) {
 }
 console.log("diffdict: ", diffdict);
 
-let maxCount = 0;
-let maxWindow = [];
-let visited = new Set();
+let countdict = {};
 for (const [key, value] of Object.entries(diffdict)) {
-  // for current key val of diffdict, we get the window. with this window,
-  // we iterate thru all the other key value of diffdict that is not this key.
-  // if there is this window, we check the responding amount of banana by taking the index and the key
-
-  let temparr = value;
-  for (let i = 3; i < temparr.length; i++) {
-    let window = temparr.slice(i - 3, i + 1);
-    if (visited.has(JSON.stringify(window)) === true) {
+  let visited = new Set();
+  for (let i = 3; i < value.length; i++) {
+    // we check if this current set of window has been visited. if yes, we skip. else we add to countdict
+    let window = value.slice(i - 3, i + 1);
+    if (visited.has(JSON.stringify(window)) === false) {
+      if (countdict[window] === undefined) {
+        countdict[window] = mydict[key][i];
+      } else {
+        countdict[window] += mydict[key][i];
+      }
+      visited.add(JSON.stringify(window));
+    } else {
       continue;
     }
-    // console.log("this is window: ", window);
-    // we need to use this window and check against all the other value array in diffdict to see if it matches
-    let output = 0;
-    output += mydict[key][i];
-    for (const [key2, value2] of Object.entries(diffdict)) {
-      if (key === key2) {
-        continue;
-      }
-      //   console.log("key: ", key);
-      //   console.log("key2: ", key2);
-      //   console.log("window: ", window);
-      let temparr2 = value2;
-      for (let j = 3; j < temparr2.length; j++) {
-        let tempwindow = temparr2.slice(j - 3, j + 1);
-        // console.log("tempwindow: ", tempwindow);
-        if (JSON.stringify(tempwindow) === JSON.stringify(window)) {
-          // the number of bananas we want to get is at j
-          output += mydict[key][j];
-          break;
-        }
-      }
-    }
-    if (output > maxCount) {
-      //   console.log("this is the output: ", output);
-      //   console.log("this window: ", window);
-      maxCount = output;
-      maxWindow = window;
-    }
-    visited.add(JSON.stringify(window));
   }
 }
-console.log("maxCount: ", maxCount);
-console.log("maxWindow: ", maxWindow);
-
-// let testing = diffdict["2024"];
-// for (let i = 3; i < testing.length; i++) {
-//   let temparr = testing.slice(i - 3, i + 1);
-//   if (JSON.stringify(temparr) === JSON.stringify([-2, 1, -1, 3])) {
-//     console.log("in 2024, this index: ", i);
-//     console.log(mydict["2024"][i]);
-//   }
-// }
+console.log("countdict: ", countdict);
+let max = 0;
+let maxArr;
+for (const [key, value] of Object.entries(countdict)) {
+  if (value > max) {
+    max = value;
+    maxArr = key;
+  }
+}
+console.log("max: ", max);
+console.log("maxArr: ", maxArr);
