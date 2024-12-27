@@ -42,3 +42,9 @@ for (const [key, value] of Object.entries(mydict)) {
 }
 console.log("xString: ", xString);
 console.log("yString: ", yString);
+
+let BRUTEFORCE = ["rpv", "z11", "rpb", "ctg", "dmh", "z31", "dvq", "z38"];
+let sortedBRUTEFORCE = BRUTEFORCE.sort((a, b) => {
+  return a.localeCompare(b);
+});
+console.log("sorted: ", sortedBRUTEFORCE.join(","));
