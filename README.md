@@ -324,3 +324,45 @@ MEGA CREDITS TO: https://github.com/onlyroz/AdventOfCode2024/blob/main/day21/src
 
 simple for loop to generate the banans for the next 2000 iterations.
 JS doing bits operation on numbers bigger than 32 bit length. Number(BigInt(a) || BigInt(b))
+
+### Day 22 part 2
+
+initialise a dictionary and count for each 'window' of 4 number pattern. for the current key:value pair, if the window is alredy visited, we dont add to the count.
+return the key with the maximum value at the end
+
+---
+
+### Day 23 part 1
+
+initialise a dictionary. the key is a computer. the values are all the other computers that is connected to it. do a double for loop to check that for the other 2 computers, they are also connected to each other.
+for all the sets of 3 computers, we sort and store in a set so we do not have duplicates. iterate through our set and find those set with a computer that starts with 't'.
+
+### Day 23 part 2
+
+two pointer solution. we keep moving our right pointer as long as the computer on the right pointer has a connection to the left pointer. if we move the pointer up by at least one, we need to check that for every computer from left to the right pointer, all have connections with each other. if there is none, we move the left pointer up. for each of the possible array, we check that they are all interconnected.
+
+comparison of array of strings in javascript
+`let sortedStringArr = arr.sort((a, b) => {return a.localeCompare(b)});`
+
+---
+
+### Day 24 part 1
+
+initiliase our X and Y address value in a dict. we store all our instructions in a array. while loop until the array is empty. we check that for both the incoming address, there is a valid value in the dict. store the results in a new key value pair in the dictionary.
+
+### Day 24 part 2
+
+credits to reddit, for mentioning that this is a ripple carry adder. we can draw out the connections and find any connections that is out of pattern. i did this with pen and paper. could probably write a for loop once we know what the pattern is.
+
+---
+
+### Day 25 part 1
+
+iterate thru the different key and locks and count how many '#' there are in a column. we know which array is key and which array is value by looking at which row is filled with '#'
+
+### Day 25 part 2
+
+Merry XMAS!
+:star::star:
+
+---
