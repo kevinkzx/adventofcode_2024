@@ -363,6 +363,6 @@ iterate thru the different key and locks and count how many '#' there are in a c
 ### Day 25 part 2
 
 Merry XMAS!
-:star::star:
+:star: :star:
 
 ---
